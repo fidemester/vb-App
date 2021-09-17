@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BaseService<T> {
-private itemsCollection: AngularFirestoreCollection<T> | undefined;
+
+  private itemsCollection: AngularFirestoreCollection<T> | undefined;
 collectionName: string = '';
 afs: AngularFirestore;  
 constructor(afs: AngularFirestore) { 
@@ -18,6 +19,7 @@ getAll(collectionName: string): Observable<T[]>{
   if (!this.itemsCollection) {
     this.collectionName = collectionName;
     this.itemsCollection = this.afs.collection<T>(this.collectionName)
+    console.log(this.itemsCollection);
   }
   return this.itemsCollection.snapshotChanges().pipe(
     map(action => action.map(a =>{
